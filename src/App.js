@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+
+import React,{useState} from "react";
+import {useBooksApi} from "./books-api";
+import SearchBar from "./searchbar";
+import BookList from "./books-list";
 import './App.css';
 
 function App() {
+
+let [value,setValue] = useState("");
+let [books] = useBooksApi(value);
+let handleChange = (e) =>
+{
+  let typedValue = e.target.value;
+  setValue(typedValue);
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchBar value={value} handleChange={handleChange}/>
+      <BookList books={books} value={value}/>
     </div>
   );
 }
